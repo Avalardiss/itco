@@ -1,0 +1,132 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image" href="{% static 'img/icon.ico' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Справочные данные по укомплектованности специалистами информационных технологий </title>
+  </head>
+
+
+
+<body>
+<header>
+<div class="container_header">
+
+<div class="logotip">
+<a href="{% url 'staffing:index' %}"><img src="/static/img/logo.png" width="80" alt=""></a>
+<h1 class="header_h1">Портал информационных технологий </h1>
+</div>
+
+</div>
+</header>
+
+<!------MENU---->
+<nav>
+  {% block sidebar %}
+  <a href="{% url 'staffing:index' %}">Главная</a>
+  <a href="{% url 'admin:index' %}">Администрирование</a>
+  <a href="{% url 'staffing:staffing' %}">Справочные данные <br> по укомплектованности специалистами <br>ИТ ЦО ВНГ РФ</a>
+  <a href="#">Мониторинг информационной безопасности</a>
+  <a href="{% url 'staffing:support' %}">Техническая <br> поддержка</a>
+  <div class="animation start-home"></div>
+  {% endblock %}
+</nav>
+
+<!----AUTENTIFICATION---->
+  <div class="login">
+    {% if user.is_authenticated %}
+    <p>Пользователь: {{ user.get_username }}</p>
+    <a href="{% url 'logout'%}?next={{request.path}}">(Выйти)</a>
+    {% else %}
+    <a href="{% url 'login'%}?next={{request.path}}">Войти</a>
+    {% endif %} 
+  </div>
+
+
+<!-------------- Из base generic блок оставить для скрытия, в связи с шаблонизацией---->
+<div class="main">
+</div>
+<!-------------------------------------------------------->
+
+
+<div class="content">
+{% block content %}
+
+<div class="button_back_base">
+<form  action="{% url 'staffing:index' %}">  <button type="submit">Назад</button> </form>
+</div>
+
+
+<h2>Справочные данные <br> по укомплектованности специалистами информационных технологий </h2>
+
+<div class="staffing">
+
+	<div class="soldier">
+		<div class="img_staff">
+        <a href="{% url 'staffing:soldier' %}"><img class="bg-img" src="/static/img/oficer.png"></a>
+        <a href="{% url 'staffing:soldier' %}"><img class=" img" src="/static/img/oficer.png"></a>
+    	</div>
+    	<div class="text_staff">
+        <a class="title" href="{% url 'staffing:soldier' %}">Войска</a>
+    	</div>
+    </div>
+
+	<div class="worker">
+		<div class="img_staff">
+        <a href="{% url 'staffing:worker' %}"><img class="bg-img" src="/static/img/worker.png"></a>
+        <a href="{% url 'staffing:worker' %}"><img class=" img" src="/static/img/worker.png"></a>
+    	</div>
+    	<div class="text_staff">
+        <a class="title" href="{% url 'staffing:worker' %}">Территориальные органы</a>
+    	</div>
+    </div>
+
+  <div class="all_staff">
+    <div class="img_staff">
+        <a href="{% url 'staffing:all_staff' %}"><img class="bg-img" src="/static/img/all_staff.png"></a>
+        <a href="{% url 'staffing:all_staff' %}"><img class=" img" src="/static/img/all_staff.png"></a>
+      </div>
+      <div class="text_staff">
+        <a class="title" href="{% url 'staffing:all_staff' %}">Итого</a>
+      </div>
+    </div>
+
+	<div class="vacant">
+		<div class="img_staff">
+        <a href="{% url 'staffing:vacant' %}"><img class="bg-img" src="/static/img/vacant.png"></a>
+        <a href="{% url 'staffing:vacant' %}"><img class=" img" src="/static/img/vacant.png"></a>
+    	</div>
+    	<div class="text_staff">
+        <a class="title" href="{% url 'staffing:vacant' %}">Перечень вакантных должностей</a>
+    	</div>
+    </div>
+
+	<div class="list_vacant">
+		<div class="img_staff">
+        <a href="{% url 'staffing:list_vacant' %}"><img class="bg-img" src="/static/img/vacant.png"></a>
+        <a href="{% url 'staffing:list_vacant' %}"><img class=" img" src="/static/img/vacant.png"></a>
+    	</div>
+    	<div class="text_staff">
+        <a class="title" href="{% url 'staffing:list_vacant' %}">Список вакантов</a>
+    	</div>
+    </div>
+
+</div>
+
+{% endblock content %}
+</div>
+
+
+
+  <div class="footer">
+    <p>&copy; Центр информационных технологий </p>
+  </div>
+
+
+</body>
+</html>
+

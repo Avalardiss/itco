@@ -1,0 +1,94 @@
+{% extends "list_vacant.html" %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{% static 'staffing:css/style.css' %}">
+    <link rel="shortcut icon" type="image" href="{% static 'img/icon.ico' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Справочные данные по укомплектованности специалистами информационных технологий </title>
+  </head>
+  <body>
+
+
+<!------MENU---->
+<nav>
+  {% block sidebar %}
+  <a href="{% url 'staffing:index' %}">Главная</a>
+  <a href="{% url 'admin:index' %}">Администрирование</a>
+  <a href="{% url 'staffing:staffing' %}">Справочные данные <br> по укомплектованности специалистами ИТ</a>
+  <a href="#">Мониторинг информационной безопасности</a>
+  <a href="{% url 'staffing:support' %}">Техническая <br> поддержка</a>
+  <div class="animation start-home"></div>
+  {% endblock %}
+</nav>
+
+
+<!----AUTENTIFICATION---->
+  <div class="login">
+    {% if user.is_authenticated %}
+    <p>Пользователь: {{ user.get_username }}</p>
+    <a href="{% url 'logout'%}?next={{request.path}}">(Выйти)</a>
+    {% else %}
+    <a href="{% url 'login'%}?next={{request.path}}">Войти</a>
+    {% endif %} 
+  </div>
+
+
+{% block content %}
+
+<div class="button_back_base">
+<form  action="{% url 'staffing:list_vacant' %}">  <button type="submit">Назад</button> </form>
+</div>
+
+<div class='soldier_table'>
+
+<table>
+
+<caption><h3>Список вакантов</h3></caption>
+
+    <tr>
+        <th class="th1" width="10%">Наименование оперативно-территориального объединения, соединения, территориального органа, воинской части, подразделения, организации</th>
+        <th class="th2" width="15%">Наименование <br> должностных <br> групп</th>
+        <th class="th3" width="8%">Классификатор <br> должностных <br> групп</th>
+        <th class="th4" width="12%">Воинская  <br> (специальная) <br> должность <br> по штату</th>
+        <th class="th11" width="8%">Дата  <br> образования  <br> ваканта</th>
+        <th class="th7" width="8%">Воинское  <br>(специальное)  <br>звание  <br>по штату</th>
+        <th class="th8" width="6%">Тарифный разряд</th>
+        <th class="th10" width="6%">ВУС</th>
+        <th class="th14">Ф.И.О.</th>
+        <th class="th15" width="8%">Воинское <br> (специальное) <br> звание</th>
+        <th class="th_edit" width="9%">Редактирование</th>
+    </tr>
+
+        <tr>
+            <td  class="td0" valign="center" align="center"><a href="{{ list_vacant.get_absolute_url }}"> {{ list_vacant.name }} </a></td>
+            <td  class="td2" valign="center" align="center"> <a href="{{ list_vacant.get_absolute_url }}"> {{ list_vacant.name_group }} </a></td>
+            <td  class="td3" valign="center" align="center"> {{ list_vacant.classifier }} </td>
+            <td  class="td4" valign="center" align="center"> {{ list_vacant.military_position_state }} </td>
+            <td  class="td10">{{ list_vacant.date_vacant }}</td>     
+            <td  class="td6" valign="center" align="center"> {{ list_vacant.rank_state }} </td>
+            <td  class="td7" valign="center" align="center"> {{ list_vacant.tariff }} </td>
+            <td  class="td8" valign="center" align="center"> {{ list_vacant.vus }} </td>
+            <td  class="td11" valign="center" align="center"> {{ list_vacant.name_candidate }} </td>
+            <td  class="td12" valign="center" align="center"> {{ list_vacant.rank }} </td>
+
+            <td class="td_edit" valign="center" align="center"> <a href="{% url 'staffing:list_vacant_update' list_vacant.pk %}">Изменить</a>  | <a class="a_delete" href="{% url 'staffing:delete_list_vacant' list_vacant.pk %}">Удалить</a> </td>
+     </tr>
+
+</table>
+
+</div>
+
+{% endblock content %}
+
+
+
+  <div class="footer">
+    <p>&copy; Центр информационных технологий </p>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+{% extends "vacant.html" %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{% static 'staffing:css/style.css' %}">
+    <link rel="shortcut icon" type="image" href="{% static 'img/icon.ico' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Справочные данные по укомплектованности специалистами информационных технологий </title>
+  </head>
+  <body>
+
+
+<!------MENU---->
+<nav>
+  {% block sidebar %}
+  <a href="{% url 'staffing:index' %}">Главная</a>
+  <a href="{% url 'admin:index' %}">Администрирование</a>
+  <a href="{% url 'staffing:staffing' %}">Справочные данные <br> по укомплектованности специалистами ИТ</a>
+  <a href="#">Мониторинг информационной безопасности</a>
+  <a href="{% url 'staffing:support' %}">Техническая <br> поддержка</a>
+  <div class="animation start-home"></div>
+  {% endblock %}
+</nav>
+
+
+<!----AUTENTIFICATION---->
+  <div class="login">
+    {% if user.is_authenticated %}
+    <p>Пользователь: {{ user.get_username }}</p>
+    <a href="{% url 'logout'%}?next={{request.path}}">(Выйти)</a>
+    {% else %}
+    <a href="{% url 'login'%}?next={{request.path}}">Войти</a>
+    {% endif %} 
+  </div>
+
+
+
+{% block content %}
+
+
+<div class="button_back_base">
+<form  action="{% url 'staffing:vacant' %}">  <button type="submit">Назад</button> </form>
+</div>
+
+<div class="soldier_table">
+
+<table>
+
+<caption><h3> Изменение данных </h3></caption>
+
+    <tr>
+        <th class="th1" width="4%">N <br> п/п</th>
+        <th class="th2" width="15%">Орган управления <br> (№ в/ч)</th>
+        <th class="th3" width="10%">Место <br> дислокации</th>
+        <th class="th4">Вакантная должность <br> (наименование)</th>
+        <th class="th11" width="12%">В/зв (специальное) <br> по штату</th>
+        <th class="th7" width="6%">Тарифный <br> разряд</th>
+        <th class="th8" width="8%">ВУС</th>
+        <th class="th10" width="12%">С какой даты <br> должность вакантна</th>
+        <th class="th9">Кто подобран <br> (в/зв, спец., призывается), Ф.И.О.)</th>
+    </tr>
+
+<form class="td_form" action="" method="post">
+
+    {% csrf_token %}
+    <tr> 
+        <td class="td_form1" valign="center" align="center"> {{ form.nomer }} </td>
+        <td  class="td_form2" valign="center" align="center"> {{ form.name }} </td>
+        <td  class="td_form3" valign="center" align="center"> {{ form.location }} </td>
+        <td  class="td_form4" valign="center" align="center"> {{ form.vacant_position }} </td>
+        <td  class="td_form5" valign="center" align="center"> {{ form.rank_state }} </td>
+        <td  class="td_form6" valign="center" align="center"> {{ form.tariff }} </td>
+        <td  class="td_form10" valign="center" align="center"> {{ form.vus }} </td>
+        <td  class="td_form11" valign="center" align="center"> {{ form.date_vacant }} </td>
+        <td  class="td_form12" valign="center" align="center"> {{ form.candidate }} </td>
+    </tr>
+</table>
+
+    <input class="button_save" type="submit" value="Сохранить изменения" />
+
+</form>
+</div>
+
+{% endblock content %}
+
+
+
+  <div class="footer">
+    <p>&copy; Центр информационных технологий </p>
+  </div>
+
+</body>
+</html>

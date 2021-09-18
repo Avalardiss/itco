@@ -1,0 +1,144 @@
+{% extends "staffing.html" %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{% static 'staffing:css/style.css' %}">
+    <link rel="shortcut icon" type="image" href="{% static 'img/icon.ico' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Справочные данные по укомплектованности специалистами информационных технологий </title>
+  </head>
+  <body>
+
+
+<!------MENU---->
+<nav>
+  {% block sidebar %}
+  <a href="{% url 'staffing:index' %}">Главная</a>
+  <a href="{% url 'admin:index' %}">Администрирование</a>
+  <a href="{% url 'staffing:staffing' %}">Справочные данные <br> по укомплектованности специалистами <br>ИТ ЦО ВНГ РФ</a>
+  <a href="#">Мониторинг информационной безопасности</a>
+  <a href="{% url 'staffing:support' %}">Техническая <br> поддержка</a>
+  <div class="animation start-home"></div>
+  {% endblock %}
+</nav>
+
+
+<!----AUTENTIFICATION---->
+  <div class="login">
+    {% if user.is_authenticated %}
+    <p>Пользователь: {{ user.get_username }}</p>
+    <a href="{% url 'logout'%}?next={{request.path}}">(Выйти)</a>
+    {% else %}
+    <a href="{% url 'login'%}?next={{request.path}}">Войти</a>
+    {% endif %} 
+  </div>
+
+
+{% block content %}
+
+<div class="button_back_base">
+<form  action="{% url 'staffing:staffing' %}">  <button type="submit">Назад</button> </form>
+</div>
+
+{% if object_list %}
+
+<div class='soldier_table'>
+
+<table>
+
+<caption><h3>Справочные данные <br> по укомплектованности специалистами информационных технологий </h3></caption>
+
+    <tr>
+        <th class="th1" rowspan="2" width="15%">Орган управления</th>   
+        <th class="th2" colspan="4">Всего</th>
+        <th class="th3" colspan="4">Офицеры</th>
+        <th class="th4" colspan="4">Прапорщики</th>
+        <th class="th5" colspan="4">Военнослужащие по контракту на должностях солдат и сержантов</th>
+        <th class="th_date6" colspan="4">Военнослужащие срочной службы</th>
+        <th class="th_date" rowspan="2" width="12%">Дата <br> редактирования</th>
+
+    </tr>
+    <tr>    
+        <th class="th2">по штату</th>
+        <th class="th2">в наличии</th>
+        <th class="th2">некомплект</th>
+        <th class="th2">% укомплектованности</th>
+
+        <th class="th3">по штату</th>
+        <th class="th3">в наличии</th>
+        <th class="th3">некомплект</th>
+        <th class="th3">% укомплектованности</th>
+
+        <th class="th4">по штату</th>
+        <th class="th4">в наличии</th>
+        <th class="th4">некомплект</th>
+        <th class="th4">% укомплектованности</th>
+
+        <th class="th5">по штату</th>
+        <th class="th5">в наличии</th>
+        <th class="th5">некомплект</th>
+        <th class="th5">% укомплектованности</th>
+
+        <th class="th_date6">по штату</th>
+        <th class="th_date6">в наличии</th>
+        <th class="th_date6">некомплект</th>
+        <th class="th_date6">% укомплектованности</th>
+
+    </tr>
+
+
+
+{% for all_staff in object_list %}
+  
+    <tr>
+        <td  class="td1"><a href="{{ all_staff.get_absolute_url }}"> {{ all_staff.name }} </a></td>
+        <td  class="td2" valign="center" align="center"> {{ all_staff.all_state }} </td>
+        <td  class="td2" valign="center" align="center"> {{ all_staff.all_nal }} </td>
+        <td  class="td2" valign="center" align="center"> {{ all_staff.all_nekomplekt }} </td>
+        <td  class="td2" valign="center" align="center"> {{ all_staff.all_percent }} </td>
+        <td  class="td3" valign="center" align="center"> {{ all_staff.off_state }} </td>
+        <td  class="td3" valign="center" align="center"> {{ all_staff.off_nal }} </td>
+        <td  class="td3" valign="center" align="center"> {{ all_staff.off_nekomplekt }} </td>
+        <td  class="td3" valign="center" align="center"> {{ all_staff.off_percent }} </td>
+        <td  class="td4" valign="center" align="center"> {{ all_staff.prap_state }} </td>
+        <td  class="td4" valign="center" align="center"> {{ all_staff.prap_nal }} </td>
+        <td  class="td4" valign="center" align="center"> {{ all_staff.prap_nekomplekt }} </td>
+        <td  class="td4" valign="center" align="center"> {{ all_staff.prap_percent }} </td>
+        <td  class="td5" valign="center" align="center"> {{ all_staff.kontrakt_state }} </td>
+        <td  class="td5" valign="center" align="center"> {{ all_staff.kontrakt_nal }} </td>
+        <td  class="td5" valign="center" align="center"> {{ all_staff.kontrakt_nekomplekt }} </td>
+        <td  class="td5" valign="center" align="center"> {{ all_staff.kontrakt_percent }} </td>
+        <td  class="td_date6" valign="center" align="center"> {{ all_staff.srok_state }} </td>
+        <td  class="td_date6" valign="center" align="center"> {{ all_staff.srok_nal }} </td>
+        <td  class="td_date6" valign="center" align="center"> {{ all_staff.srok_nekomplekt }} </td>
+        <td  class="td_date6" valign="center" align="center"> {{ all_staff.srok_percent }} </td>
+        <td  class="td_date" valign="center" align="center"> {{ all_staff.pub_date }} </td>
+        
+    </tr>
+ 
+{% endfor %}
+</table>
+
+{% else %}
+<div class="soldier_table" style="display: none;"></div>
+<div class="none_div">
+<p>НЕТ информации в "Итого за ...." базы данных, добавьте информацию !</p>
+</div>
+
+
+{% endif %} 
+</div>
+
+{% endblock content %}
+
+
+
+  <div class="footer">
+    <p>&copy; Центр информационных технологий </p>
+  </div>
+
+</body>
+</html>

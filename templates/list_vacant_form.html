@@ -1,0 +1,98 @@
+{% extends "list_vacant.html" %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{% static 'staffing:css/style.css' %}">
+    <link rel="shortcut icon" type="image" href="{% static 'img/icon.ico' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Справочные данные по укомплектованности специалистами информационных технологий </title>
+  </head>
+  <body>
+
+
+<!------MENU---->
+<nav>
+  {% block sidebar %}
+  <a href="{% url 'staffing:index' %}">Главная</a>
+  <a href="{% url 'admin:index' %}">Администрирование</a>
+  <a href="{% url 'staffing:staffing' %}">Справочные данные <br> по укомплектованности специалистами ИТ</a>
+  <a href="#">Мониторинг информационной безопасности</a>
+  <a href="{% url 'staffing:support' %}">Техническая <br> поддержка</a>
+  <div class="animation start-home"></div>
+  {% endblock %}
+</nav>
+
+
+<!----AUTENTIFICATION---->
+  <div class="login">
+    {% if user.is_authenticated %}
+    <p>Пользователь: {{ user.get_username }}</p>
+    <a href="{% url 'logout'%}?next={{request.path}}">(Выйти)</a>
+    {% else %}
+    <a href="{% url 'login'%}?next={{request.path}}">Войти</a>
+    {% endif %} 
+  </div>
+
+
+
+{% block content %}
+
+
+<div class="button_back_base">
+<form  action="{% url 'staffing:list_vacant' %}">  <button type="submit">Назад</button> </form>
+</div>
+
+<div class="soldier_table">
+
+<table>
+
+<caption><h3> Изменение данных </h3></caption>
+
+    <tr>
+        <th class="th1" width="15%">Наименование оперативно-территориального объединения, соединения, территориального органа, воинской части, подразделения, организации</th>
+        <th class="th2" width="15%">Наименование <br> должностных <br> групп</th>
+        <th class="th3" width="8%">Классификатор <br> должностных <br> групп</th>
+        <th class="th4" width="12%">Воинская  <br> (специальная) <br> должность <br> по штату</th>
+        <th class="th11" width="8%">Дата  <br> образования  <br> ваканта</th>
+        <th class="th7" width="8%">Воинское  <br>(специальное)  <br>звание  <br>по штату</th>
+        <th class="th8" width="6%">Тарифный разряд</th>
+        <th class="th10" width="6%">ВУС</th>
+        <th class="th14">Ф.И.О.</th>
+        <th class="th9" width="8%">Воинское <br> (специальное) <br> звание</th>
+    </tr>
+
+<form class="td_form" action="" method="post">
+
+    {% csrf_token %}
+    <tr> 
+        <td class="td_form1" valign="center" align="center"> {{ form.name }} </td>
+        <td  class="td_form2" valign="center" align="center"> {{ form.name_group }} </td>
+        <td  class="td_form3" valign="center" align="center"> {{ form.classifier }} </td>
+        <td  class="td_form4" valign="center" align="center"> {{ form.military_position_state }} </td>
+        <td  class="td_form5" valign="center" align="center"> {{ form.date_vacant }} </td>
+        <td  class="td_form6" valign="center" align="center"> {{ form.rank_state }} </td>
+        <td  class="td_form10" valign="center" align="center"> {{ form.tariff }} </td>
+        <td  class="td_form11" valign="center" align="center"> {{ form.vus }} </td>
+        <td  class="td_form13" valign="center" align="center"> {{ form.name_candidate }} </td>
+        <td  class="td_form12" valign="center" align="center"> {{ form.rank }} </td>
+    </tr>
+</table>
+
+    <input class="button_save" type="submit" value="Сохранить изменения" />
+
+</form>
+</div>
+
+{% endblock content %}
+
+
+
+  <div class="footer">
+    <p>&copy; Центр информационных технологий </p>
+  </div>
+
+</body>
+</html>

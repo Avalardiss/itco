@@ -1,0 +1,49 @@
+{% extends "base_generic.html" %}
+
+<div class="none_display">
+
+<div class="content">
+
+{% block content %}
+
+
+<div class="enter_login">
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p class="log">Ваша учетная запись не имеет доступа к этой странице. 
+      <br> Чтобы продолжить, пожалуйста, войдите в систему с учетной записью, которая имеет доступ.</p>
+  {% else %}
+    <p class="log"></p>
+  {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+
+{% csrf_token %}
+
+<table class="table_login">
+<a class="logotip_login" href="{% url 'staffing:index' %}"><img src="/static/img/logo.png"></a>
+<p class="log">Войдите в систему, чтобы увидеть эту страницу.</p>
+{% if form.errors %}
+  <p class="log">Ваше имя пользователя и пароль не совпадают.</p>
+{% endif %}
+<tr>
+  <td>{{ form.username.label_tag }}</td>
+  <td>{{ form.username }}</td>
+</tr>
+
+<tr>
+  <td>{{ form.password.label_tag }}</td>
+  <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input class="submit_login" type="submit" value="Войти" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+</div>
+
+{% endblock %}
+</div>
+</div>

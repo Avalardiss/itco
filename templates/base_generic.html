@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  {% block title %}<title>Портал информационных технологий </title>{% endblock %}
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="shortcut icon" type="image" href="{% static 'img/vng.png' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+<header>
+
+<div class="container_header">
+
+<div class="logotip">
+<a href="{% url 'staffing:index' %}"><img src="/static/img/logo.png"></a>
+<h1>Портал информационных технологий </h1>
+</div>
+
+</div>
+</header>
+
+
+<!------MENU---->
+<nav>
+  {% block sidebar %}
+  <a href="{% url 'staffing:index' %}">Главная</a>
+  <a href="{% url 'admin:index' %}">Администрирование</a>
+  <a href="{% url 'staffing:staffing' %}">Справочные данные <br> по укомплектованности специалистами ИТ </a>
+  <a href="#">Мониторинг информационной безопасности</a>
+  <a href="{% url 'staffing:support' %}">Техническая <br> поддержка</a>
+  <div class="animation start-home"></div>
+  {% endblock %}
+</nav>
+
+<div class="content">
+
+
+
+<!----AUTENTIFICATION---->
+  <div class="login">
+    {% if user.is_authenticated %}
+    <p>Пользователь: {{ user.get_username }}</p>
+    <a href="{% url 'password_change'%}">(Изменить пароль)</a>
+    <a href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
+    
+    {% else %}
+    <a href="{% url 'login'%}?next={{request.path}}"></a>
+    {% endif %} 
+  </div>
+
+<div class="main">
+
+  <div class="img_main">
+    <img src="/static/img/main.png">
+  </div>
+
+  <div class="text_main">
+<p>...................................</p>
+
+  </div>
+</div>
+</div>
+{% block content %}
+
+{% endblock %}
+
+
+
+  <div class="footer">
+    <p>&copy; Центр информационных технологий, 2021</p>
+  </div>
+
+
+
+</body>
+ 
+</html>
